@@ -1,0 +1,17 @@
+
+// This checks if the user has the required role (Admin, Analyst, or Viewer)
+const authorize = (roles = []) => {
+    return (req, res, next) => {
+        // Zorvyn wants to see how you handle role-based logic
+        const userRole = req.headers['x-user-role']; 
+
+        if (!userRole || !roles.includes(userRole)) {
+            return res.status(403).json({ 
+                error: "ACCESS_DENIED: Critical Security Clearance Required." 
+            });
+        }
+        next(); // User is authorized, proceed to the data
+    };
+};
+
+module.exports = authorize;
